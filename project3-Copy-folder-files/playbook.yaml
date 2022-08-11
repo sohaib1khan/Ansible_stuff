@@ -1,0 +1,17 @@
+---
+-
+  name: Copy some file and folder to remote servers
+  hosts: all
+  tasks:
+
+  # The copy module can be found here https://docs.ansible.com/ansible/2.9/modules/copy_module.html#copy-module
+  - name: Copy some files and folder to remote servers, using the copy module from ansible.
+    become: true
+    copy:
+      src: /home/labdevenv/Downloads/
+      dest: ~/
+      force: yes
+      mode: 0777
+      directory_mode:
+  
+

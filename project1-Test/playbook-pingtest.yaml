@@ -1,4 +1,6 @@
+---
 -
+# This playbook is really simple, it pings all the nodes specified on the host/inventory file. 
   name:  Test Connectivity of target nodes
   hosts: all
   tasks:

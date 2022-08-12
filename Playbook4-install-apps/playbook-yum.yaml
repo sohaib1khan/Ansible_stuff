@@ -1,0 +1,33 @@
+---
+-
+# This playbook works on proxmox container centos 8 
+
+  name: Update and install few apps on RHEL based system
+  hosts: centosServer4
+  tasks:
+    # - name: ensure a list of packages installed
+    #   yum:
+    #     name: "{{ packages }}"
+    #   vars:
+    #     packages:
+    #     - ansible
+    #     - tree
+
+    - name:  Upgrade all packages
+      yum:
+        name:  "*"
+        state: latest
+
+    - name:  Install vim
+      yum:
+        name: vim
+        state: latest
+    
+    - name:  Install tree
+      yum:
+        name: tree
+        state: latest
+
+
+
+        

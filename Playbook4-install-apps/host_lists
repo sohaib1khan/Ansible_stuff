@@ -14,3 +14,7 @@
 # Group 3:
 [deployServer3]
 192.168.1.136 ansible_user=ansible-1
+
+# Group 4:
+[centosServer4]
+192.168.1.138 ansible_user=root

@@ -1,4 +1,0 @@
-[test_nodes]
-192.168.1.137 ansible_user=ansible-2
-192.168.1.135 ansible_user=ansible0
-192.168.1.136 ansible_user=ansible-1

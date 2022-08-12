@@ -1,0 +1,4 @@
+# Ansible README
+
+# This playbook perform system update/upgrade. There are few command/apps that dont come installed on some distros. So we want to automate that in ansible. 
+

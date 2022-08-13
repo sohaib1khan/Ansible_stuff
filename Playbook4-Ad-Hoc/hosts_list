@@ -1,0 +1,31 @@
+# Specify hosts/IPs of the node where the playbook will be deployed on.
+
+
+# Create groups:
+
+# Group 1
+[testServer1]
+192.168.1.137 ansible_user=ansible-2
+
+# Group 2
+[buildServer2]
+192.168.1.135 ansible_user=ansible0
+
+# Group 3:
+[deployServer3]
+192.168.1.136 ansible_user=ansible-1
+
+# Group 4:
+[centosServer4]
+192.168.1.138 ansible_user=root
+
+# Group all the servers together by server names
+[multi:children]
+testServer1
+centosServer4
+deployServer3
+buildServer2
+
+# Variable for all the servers, when running ad hoc command for all server use the var for all server
+[multi:vars]
+ansible_user=ansible0

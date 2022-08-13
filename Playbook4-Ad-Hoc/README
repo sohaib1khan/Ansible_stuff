@@ -1,0 +1,68 @@
+# Ansible_To_Go
+
+# In this playbook, i ran few Ad-Hoc commands to see some stuff work. Basicaly what that means is that instead of defining instruction in a file such yaml, i ran the command on cli.
+# For example, this is  kind  of like typing long command on your cli when deploying something with docker/kubertnetes. In kubernetes/Docker we use compose/dockerfile and in kubernetes deployment file. So to define Ad-Hoc, its just typing them on cli vs defining them on a file like yaml, json, etc etc.
+
+# hosts_list: file contain 4 nodes that i'm using in this playbook. 3 nodes are ubuntu and 1 is centos 8. 
+
+# Ad-Hoc Commands and output
+
+``` ansible centosServer4 -i hosts_list -m setup ```
+
+# ansible: calling the ansible command 
+# centosServer4: centosServer4 is the server/node we are using 
+# -i hosts_list: INCLUDE the inventory file 
+# -m setup: 'm' means module, module setup displays configured information from node. 
+
+
+```$ ansible centosServer4 -i hosts_list -m setup | head
+    192.168.1.138 | SUCCESS => {
+        "ansible_facts": {
+            "ansible_all_ipv4_addresses": [
+                "192.168.1.138"
+            ],
+            "ansible_all_ipv6_addresses": [
+                "fe80::9861:b5ff:fe43:797c"
+            ],
+               "ansible_apparmor": { 
+               "status": "disabled"  ```  
+    
+                
+                                    
+
+
+
+``` ansible -i hosts_list deployServer3 -m ping ```
+
+# ansible: calling the ansible command 
+# deployServer3: is the server/node we are using
+# -m ping: modue ping, which will ping the node to see if its alive 
+
+``` $ ansible -i hosts_list deployServer3 -m ping
+192.168.1.136 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+} ``` 
+
+
+``` ansible multi -i hosts_list -a "date" ```
+
+# ansible: calling the ansible command
+# multi: is the variable defined in the inventory/hosts_list file
+# -i hosts_list: INCLUDE the inventory file
+# -a "date" : with option 'a' option you then type any linux comman 
+
+```
+$ ansible multi -i hosts_list -a "date"
+192.168.1.138 | CHANGED | rc=0 >>
+Sat Aug 13 01:18:13 UTC 2022
+192.168.1.136 | CHANGED | rc=0 >>
+Sat 13 Aug 2022 01:18:13 AM UTC
+192.168.1.135 | CHANGED | rc=0 >>
+Sat 13 Aug 2022 01:18:13 AM UTC
+192.168.1.137 | CHANGED | rc=0 >>
+Sat 13 Aug 2022 01:18:13 AM UTC 
+                                 ```

@@ -7,7 +7,7 @@
 
 # Ad-Hoc Commands and output
 
-``` ansible centosServer4 -i hosts_list -m setup ```
+     ansible centosServer4 -i hosts_list -m setup 
 
 # ansible: calling the ansible command 
 # centosServer4: centosServer4 is the server/node we are using 
@@ -15,7 +15,7 @@
 # -m setup: 'm' means module, module setup displays configured information from node. 
 
 
-```$ ansible centosServer4 -i hosts_list -m setup | head
+   $ ansible centosServer4 -i hosts_list -m setup | head
     192.168.1.138 | SUCCESS => {
         "ansible_facts": {
             "ansible_all_ipv4_addresses": [
@@ -25,37 +25,37 @@
                 "fe80::9861:b5ff:fe43:797c"
             ],
                "ansible_apparmor": { 
-               "status": "disabled"  ```  
+               "status": "disabled" 
     
                 
                                     
 
 
 
-``` ansible -i hosts_list deployServer3 -m ping ```
+   ansible -i hosts_list deployServer3 -m ping
 
 # ansible: calling the ansible command 
 # deployServer3: is the server/node we are using
 # -m ping: modue ping, which will ping the node to see if its alive 
 
-``` $ ansible -i hosts_list deployServer3 -m ping
+     $ ansible -i hosts_list deployServer3 -m ping
 192.168.1.136 | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
     },
     "changed": false,
     "ping": "pong"
-} ``` 
+} 
 
 
-``` ansible multi -i hosts_list -a "date" ```
+   ansible multi -i hosts_list -a "date"
 
 # ansible: calling the ansible command
 # multi: is the variable defined in the inventory/hosts_list file
 # -i hosts_list: INCLUDE the inventory file
 # -a "date" : with option 'a' option you then type any linux comman 
 
-```
+
 $ ansible multi -i hosts_list -a "date"
 192.168.1.138 | CHANGED | rc=0 >>
 Sat Aug 13 01:18:13 UTC 2022
@@ -65,4 +65,3 @@ Sat 13 Aug 2022 01:18:13 AM UTC
 Sat 13 Aug 2022 01:18:13 AM UTC
 192.168.1.137 | CHANGED | rc=0 >>
 Sat 13 Aug 2022 01:18:13 AM UTC 
-                                 ```

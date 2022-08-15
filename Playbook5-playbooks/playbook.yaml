@@ -1,0 +1,67 @@
+# Few ways to write the same ansible play from beginner to a little advance and clean. 
+---
+- 
+
+  name:  Install apache
+  hosts: centosServer4
+  become: true
+
+
+# This is the simplest way to write a playbook because you can run one command after another just like a script
+  # tasks:
+  #   - name:  Install Apache
+  #     command: yum install --quiet -y httpd httpd-devel
+  #   - name:  Copy Configuration files
+  #     command: >
+  #       cp httpd.conf /etc/httpd/conf/httpd.conf
+  #   - command: >
+  #       cp httpd-vhosts /etc/httpd/conf/httpd-vhosts.conf
+  #   - name:  Start Apache and configure it to run at boot. 
+  #     command: service httpd start
+  #   - commaand: httpd on
+
+
+    # OR 
+# This is another way of running list of task using the shell module
+  # tasks:
+  #   - name: Install and configure apache 
+  #     shell: | 
+  #       yum install --quiet -y httpd httpd-devel
+  #       cp httpd.conf /etc/httpd/conf/httpd.conf
+  #       cp httpd-vhosts /etc/httpd/conf/httpd-vhosts.conf
+  #       service httpd start
+
+
+
+  # OR 
+# This is the more of ansible style play. 
+  tasks:
+    - name:  Install Apache
+      yum:
+        name:  
+          - httpd
+          - httpd-devel
+        state: present
+    
+    - name:  Copy Configuration files
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+        - src: httpd.conf
+          dest: /etc/httpd/conf/httpd.conf
+        - src: httpd-vhosts.conf
+          dest: /etc/httpd/conf/httpd-vhosts.conf
+    
+    - name:  Ensure Apache is started 
+      service:
+        name:  httpd
+        state: started
+        enabled: yes
+
+
+
+

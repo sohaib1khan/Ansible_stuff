@@ -1,6 +1,5 @@
 Ansible_To_Go
 
-Purpose of this repo is to store and use various ansible playbooks. 'Sharing is caring'
 
 When running ansible playbook, make sure you have your local environment configured to run ansible and also be able to communicate with servers. Lets go over some prerequisites before running your first playbook. Below are the steps I took to setup my linux environemtn for ansible, your may vary.
 

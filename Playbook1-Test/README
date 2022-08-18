@@ -18,5 +18,5 @@ Then you will want to correct the ip address and the hostnames corresponding to 
 192.168.1.136 ansible_user=ansible-1
 ```
 
-* In our example, we telling in playbook to run a ping on 3 nodes.
+* In our example, we are  telling in the playbook to run a ping on 3 nodes.
     

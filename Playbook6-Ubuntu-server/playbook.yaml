@@ -1,9 +1,9 @@
 ---
 -
-  name: Update ubuntu system and install apps
   hosts: all
   become: true
   become_method: sudo
+
 
   pre_tasks:
     - name:  Update apt cache if needed.
@@ -19,23 +19,7 @@
 
     - name: Update all packages to the latest version
       apt:
-        upgrade: dist
-
-    - name: Remove useless packages from the cache
-      apt:
-        autoclean: yes
-
-    - name: Remove dependencies that are no longer required
-      apt:
-        autoremove: yes
-    
-    - name:  Install vim, net-tool, tree,
-      apt:
-        pkg:
-        - vim
-        - tree
-        - net-tools
-
+        upgrade: dist      
 
     - name: Check if a reboot is required.
       ansible.builtin.stat:
@@ -50,5 +34,6 @@
     - name: Remove dependencies that are no longer required.
       ansible.builtin.apt:
         autoremove: yes
-    # - name:  Reboot System (mandatory option)
-    #   command: sudo reboot
+    - name:  Reboot System
+      command: sudo reboot
+

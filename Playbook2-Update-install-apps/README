@@ -2,3 +2,7 @@
 
 # This playbook perform system update/upgrade. There are few command/apps that dont come installed on some distros. So we want to automate that in ansible. 
 
+
+# From the directory where the playbook files located run the following command and provide the password. 
+
+``` sudo ansible-playbook playbook-apt.yaml -i apt_hosts  -K ```

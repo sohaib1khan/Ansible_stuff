@@ -1,6 +1,6 @@
 # Ansible README
 
-This is a really simple playbook that pings 3 nodes that are specified in the host/inventory file. In  this example we will use 3 virtual machine with 4th being the controler where the Ansible service will be install. 
+This is a really simple playbook that pings 3 nodes that are specified in the host/inventory file. In  this example we will use 3 virtual machine with 4th being the controler where the Ansible service will be installed. 
 
 * First create a directory and move into it. 
     ``` mkdir ansible_something && cd ansible_something && pwd ``` 
@@ -9,7 +9,7 @@ This is a really simple playbook that pings 3 nodes that are specified in the ho
 * Next create a file and paste the host name and the ip address, for ansible playbook to pickup when it runs. 
     ```vi hosts```
     
-Then you will want to correct the ip address and the hostnames corresponding to your setup. Please see the host-list for sample. 
+Then you will want to format the ip address and the hostnames in the 'ini' format. Please see the host-list for sample. 
 
 ```
 [test_nodes]

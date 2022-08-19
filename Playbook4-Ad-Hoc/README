@@ -53,7 +53,7 @@
 # ansible: calling the ansible command
 # multi: is the variable defined in the inventory/hosts_list file
 # -i hosts_list: INCLUDE the inventory file
-# -a "date" : with option 'a' option you then type any linux comman 
+# -a "date" : with option 'a' option you then type any linux command 
 
 
 $ ansible multi -i hosts_list -a "date"

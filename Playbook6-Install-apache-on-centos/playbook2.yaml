@@ -1,0 +1,37 @@
+---
+-
+# This playbook works on proxmox container centos 8 
+
+  name: Update and install few apps on RHEL based system
+  hosts: apacheserver
+  become: true
+
+  tasks:
+    - name:  Upgrade all packages
+      yum:
+        name:  "*"
+        state: latest
+    - command: dnf update -y && sudo  dnf upgrade -y && sudo dnf autoremove && sudo  dnf clean all
+   
+    - name:  Install Apache
+      yum:
+        name:  
+          - httpd
+          - httpd-devel
+          - tree
+          - vim
+        state: latest
+
+    - name: Enable service httpd, and not touch the state
+      ansible.builtin.service:
+        name: httpd
+        enabled: yes
+
+    - name: Start service httpd, if not started
+      ansible.builtin.service:
+        name: httpd
+        state: started
+
+    
+    - name:  Reboot server 
+      command: sudo reboot 

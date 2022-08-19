@@ -1,0 +1,6 @@
+# Specify hosts/IPs of the node where the playbook will be deployed on.
+
+[apacheserver]
+192.168.1.141 ansible_user=root
+
+

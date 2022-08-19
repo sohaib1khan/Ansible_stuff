@@ -1,0 +1,24 @@
+---
+-
+  name: Install net-tools
+  hosts: all
+  
+  
+  tasks:
+    - name: Upgrade all packages to the latest version
+      apt:
+        name: "*"
+        state: latest
+
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist 
+    
+    - name: Install a list of packages
+      apt:
+        pkg:
+        - net-tools
+        - vim 
+        - tree
+        - nmap
+        - iperf3

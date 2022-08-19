@@ -35,6 +35,7 @@
         - vim
         - tree
         - net-tools
+        - ranger
 
 
     - name: Check if a reboot is required.

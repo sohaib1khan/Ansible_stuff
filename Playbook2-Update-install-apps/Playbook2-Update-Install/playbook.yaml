@@ -22,3 +22,4 @@
         - tree
         - nmap
         - iperf3
+        - ranger  # cli file manager pretty cool actually https://github.com/ranger/ranger 

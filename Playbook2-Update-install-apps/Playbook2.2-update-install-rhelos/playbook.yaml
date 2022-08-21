@@ -1,0 +1,30 @@
+---
+-
+
+# This playbook is to update RHEL distro using dnf package manager
+
+  name:  Update system and install few apps
+  hosts: all
+  become: true
+
+  tasks:
+  - name: upgrade all packages
+    dnf:
+      name: "*"
+      state: latest
+  - name: install few apps 
+    dnf:
+      name:
+        - vim
+        - ranger
+        - tree
+        - fzf
+      state: latest
+
+  - name: Autoremove unneeded packages installed as dependencies
+    dnf:
+      autoremove: yes
+
+  - command: dnf update -y && sudo  dnf upgrade -y && sudo dnf autoremove && sudo  dnf clean all
+  # - name:  Reboot server 
+  #   command: sudo reboot 

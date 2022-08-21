@@ -1,0 +1,5 @@
+# Specify hosts/IPs of the node where the playbook will be deployed on.
+
+[fedora_servers]
+192.168.1.143 ansible_user=ansible-20
+192.168.1.144 ansible_user=ansible-21

@@ -1,0 +1,11 @@
+---
+-
+
+# Installed new fedora servers and testing connectivity. 
+
+  name: Test fedora machine 
+  hosts: all
+
+  tasks:
+    - name:  ping
+      ping:

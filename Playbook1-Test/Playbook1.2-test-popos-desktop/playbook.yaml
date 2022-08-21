@@ -1,0 +1,11 @@
+---
+-
+
+# Testing popos servers connectivity. 
+
+  name: Test popos machine 
+  hosts: all
+
+  tasks:
+    - name:  ping
+      ping:

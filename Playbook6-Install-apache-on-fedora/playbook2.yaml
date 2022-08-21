@@ -3,16 +3,18 @@
 # This playbook works on proxmox container centos 8 
 
   name: Update and install few apps on RHEL based system
-  hosts: apacheserver
+  hosts: webserver
   become: true
 
-  # handlers:
-  #   - name:  restart apache when installed
-  #     service:
-  #       name:  httpd
-  #       state: restarted
+  handlers:
+    - name:  restart apache when installed
+      service:
+        name:  httpd
+        state: restarted
 
   tasks:
+
+
     - name:  Ensure Apache is installed.
       yum:
         name:  httpd
@@ -20,7 +22,7 @@
       
     - name:  Copy test config to centos vm
       copy:
-        src: /home/labdevenv/Ansible/Ansible_To_Go/Playbook6-Install-apache-on-centos/test.conf
+        src: /home/labdevenv/Ansible/Ansible_To_Go/Playbook6-Install-apache-on-fedora/test.conf
         dest: /etc/httpd/conf.d/test.conf
       notify: restart apache
     

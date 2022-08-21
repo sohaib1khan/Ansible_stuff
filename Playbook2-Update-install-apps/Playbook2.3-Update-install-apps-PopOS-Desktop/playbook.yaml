@@ -1,0 +1,32 @@
+---
+-
+  name: Update & installs updates
+  hosts: all
+  become: true
+  
+  
+  tasks:
+    - name: Upgrade all packages to the latest version
+      apt:
+        name: "*"
+        state: latest
+
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist 
+    
+    - name: Install a list of packages
+      apt:
+        pkg:
+        - net-tools
+        - vim 
+        - tree
+        - slack
+        - code
+        - discord
+        - terminator
+        - chrome
+        - zoom
+        - brave
+        - ranger  # cli file manager pretty cool actually https://github.com/ranger/ranger 
+    - command: sudo  apt update -y && sudo  apt upgrade -y && sudo  apt autoclean -y && sudo apt autoremove -y && flatpak update -y

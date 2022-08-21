@@ -3,7 +3,7 @@
 # This playbook works on proxmox container centos 8 
 
   name: Update and install few apps on RHEL based system
-  hosts: apacheserver
+  hosts: webserver
   become: true
 
   tasks:
@@ -21,6 +21,7 @@
           - tree
           - vim
         state: latest
+    - command: sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 
     - name: Enable service httpd, and not touch the state
       ansible.builtin.service:
@@ -33,5 +34,5 @@
         state: started
 
     
-    - name:  Reboot server 
-      command: sudo reboot 
+    # - name:  Reboot server 
+    #   command: sudo reboot 

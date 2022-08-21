@@ -1,7 +1,7 @@
 ---
 -
 
-# Installed new fedora servers and testing connectivity. 
+# Testing fedora servers connectivity. 
 
   name: Test fedora machine 
   hosts: all

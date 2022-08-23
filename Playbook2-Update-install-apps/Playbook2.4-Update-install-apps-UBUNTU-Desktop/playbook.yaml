@@ -58,6 +58,6 @@
     # Final tasks    
     - name:  final clean up 
       shell: sudo  apt update -y && sudo  apt upgrade -y && sudo  apt autoclean -y && sudo apt autoremove -y  
-    - name:  Reboot System (mandatory reboot, uncomment to enable this  option)
+    - name:  Reboot System # (mandatory reboot, uncomment to enable this  option)
       command: sudo reboot
     

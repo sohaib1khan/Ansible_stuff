@@ -21,33 +21,41 @@
         - vim 
         - tree
         - terminator
+        - vlc
+        - pithos
+        - curl
         - ranger  # cli file manager pretty cool actually https://github.com/ranger/ranger 
         - flatpak
     - command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    - name: Install the vscode flatpak
+    
+    
+    - name:  Install Brave 
+      shell: curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg 
+    - shell: echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    - shell: sudo apt update && sudo apt install brave-browser -y
+
+    - name:  Install Zoom
+      shell: wget https://zoom.us/client/latest/zoom_amd64.deb  && sudo apt install ./zoom_amd64.deb -y
+
+    - name:  Install discord
+      shell: wget "https://discord.com/api/download?platform=linux&format=deb" -O discord.deb
+    - shell: sudo apt install ./discord.deb -y
+    
+
+    # Flatpak App install
+    - name: Install the slack flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.slack.Slack.flatpakref
+        state: present
+    - name:  Install vscode 
       flatpak:
         name:  https://dl.flathub.org/repo/appstream/com.visualstudio.code.flatpakref
-        state: present
-    - name: Install the brave browser flatpak
-      flatpak:
-        name:  https://dl.flathub.org/repo/appstream/com.brave.Browser.flatpakref
-        state: present
+        state: present                   
     - name: Install the chrome browser flatpak
       flatpak:
         name:  https://dl.flathub.org/repo/appstream/com.google.Chrome.flatpakref
         state: present
-    - name: Install the discord flatpak
-      flatpak:
-        name:  https://dl.flathub.org/repo/appstream/com.discordapp.Discord.flatpakref
-        state: present       
-    - name: Install the zoom flatpak
-      flatpak:
-        name:  https://dl.flathub.org/repo/appstream/us.zoom.Zoom.flatpakref
-        state: present 
-    - name: Install the slack flatpak
-      flatpak:
-        name:  https://dl.flathub.org/repo/appstream/com.slack.Slack.flatpakref
-        state: present                   
+    # Final tasks    
     - name:  final clean up 
       shell: sudo  apt update -y && sudo  apt upgrade -y && sudo  apt autoclean -y && sudo apt autoremove -y  
     - name:  Reboot System (mandatory reboot, uncomment to enable this  option)

@@ -1,0 +1,55 @@
+---
+-
+  name: Update & installs updates
+  hosts: all
+    
+  
+  tasks:
+    - name: Upgrade all packages to the latest version
+      apt:
+        name: "*"
+        state: latest
+
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist 
+    
+    - name: Install a list of packages
+      apt:
+        pkg:
+        - net-tools
+        - vim 
+        - tree
+        - terminator
+        - ranger  # cli file manager pretty cool actually https://github.com/ranger/ranger 
+        - flatpak
+    - command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    - name: Install the vscode flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.visualstudio.code.flatpakref
+        state: present
+    - name: Install the brave browser flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.brave.Browser.flatpakref
+        state: present
+    - name: Install the chrome browser flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.google.Chrome.flatpakref
+        state: present
+    - name: Install the discord flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.discordapp.Discord.flatpakref
+        state: present       
+    - name: Install the zoom flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/us.zoom.Zoom.flatpakref
+        state: present 
+    - name: Install the slack flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.slack.Slack.flatpakref
+        state: present                   
+    - name:  final clean up 
+      shell: sudo  apt update -y && sudo  apt upgrade -y && sudo  apt autoclean -y && sudo apt autoremove -y  
+    - name:  Reboot System (mandatory reboot, uncomment to enable this  option)
+      command: sudo reboot
+    

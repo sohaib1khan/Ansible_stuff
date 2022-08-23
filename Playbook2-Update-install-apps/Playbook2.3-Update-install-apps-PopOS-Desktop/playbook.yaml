@@ -2,8 +2,7 @@
 -
   name: Update & installs updates
   hosts: all
-  become: true
-  
+    
   
   tasks:
     - name: Upgrade all packages to the latest version
@@ -21,12 +20,35 @@
         - net-tools
         - vim 
         - tree
-        - slack
-        - code
-        - discord
         - terminator
-        - chrome
-        - zoom
-        - brave
         - ranger  # cli file manager pretty cool actually https://github.com/ranger/ranger 
-    - command: sudo  apt update -y && sudo  apt upgrade -y && sudo  apt autoclean -y && sudo apt autoremove -y && flatpak update -y
+        - flatpak
+    - command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    - name: install vscode 
+      shell: sudo apt install software-properties-common apt-transport-https wget -y && wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add - && sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" 
+    - shell: sudo apt install code
+    
+    
+    - name:  Install Brave 
+      shell: sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg 
+    - shell: echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    - shell: sudo apt install brave-browser
+
+    - name:  Install Zoom
+      shell: wget https://zoom.us/client/latest/zoom_amd64.deb  && sudo apt install ./zoom_amd64.deb
+
+    - name:  Install discord
+      shell: wget "https://discord.com/api/download?platform=linux&format=deb" –O discord.deb && sudo apt install ./discord.deb
+    
+
+    # Flatpak has stable version of slack, so we'll install slack from flatpak
+    - name: Install the slack flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.slack.Slack.flatpakref
+        state: present                   
+
+    - name:  final clean up 
+      shell: sudo  apt update -y && sudo  apt upgrade -y && sudo  apt autoclean -y && sudo apt autoremove -y  
+    - name:  Reboot System (mandatory reboot, uncomment to enable this  option)
+      command: sudo reboot
+    

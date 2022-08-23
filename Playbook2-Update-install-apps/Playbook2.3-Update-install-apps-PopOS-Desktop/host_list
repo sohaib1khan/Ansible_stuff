@@ -1,3 +1,2 @@
-# Specify hosts/IPs of the node where the playbook will be deployed on.
 [popos]
-192.168.1.148 ansible_user=root
+192.168.1.148 ansible_user=ansible0

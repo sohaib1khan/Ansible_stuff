@@ -1,7 +1,7 @@
 # The purpose of this playbook is to install most of the tools that are used in DevOps. 
 # The goal is to install several useful tools on a RHEL based distro. For personal use i sometime use more than one package manager to install apps/tools. We'll use Brew, yum, dnf, flatpak and maybe snap. 
 # We will be installing the following, 
-# Docker, Kubernetes, kuben,kubectx, vim, ranger, tree, terraform, helm, AWS-cli, ansible, git
+# Docker, Kubernetes, kuben,kubectx, vim, ranger, tree, terraform, helm, AWS-cli, ansible, git, k9s 
 
 ---
 -
@@ -64,8 +64,8 @@
       url: https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
       dest: /tmp/minikube-latest.x86_64.rpm
   - name: install minikube
-    shell: rpm -i /tmp/minikube-latest.x86_64.rpm
-  - shell: rm -rf /tmp/minikube-latest.x86_64.rpm
+    shell: sudo rpm -i /tmp/minikube-latest.x86_64.rpm
+  - shell: sudo rm -rf /tmp/*
 
   # Install kubectx and kubens
   - name:  Cloning  the tool repo from github
@@ -79,5 +79,5 @@
    # Final tasks    
   - name:  final clean up 
     command: dnf update -y && sudo  dnf upgrade -y && sudo dnf autoremove && sudo  dnf clean all
-  # - name:  Reboot System # (mandatory reboot, uncomment to enable this  option)
-  #   command: sudo reboot
+  - name:  Reboot System # (mandatory reboot, uncomment to enable this  option)
+    command: sudo reboot

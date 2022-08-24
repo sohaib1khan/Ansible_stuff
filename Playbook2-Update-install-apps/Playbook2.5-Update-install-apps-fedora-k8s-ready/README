@@ -1,0 +1,23 @@
+# Ansible README
+
+The purpose of this playbook is install apps/tools that are used in DevOps work environment. These are not all the apps/tools but are some of my favorite ones.
+I know the code is not the best ansible suggested format.. i will update the code the peroidically. This playbook is tested on fedora 36 with no issues. 
+
+
+# Apps/tools
+- Docker
+- Kubernetes
+- kuben
+- kubectx
+- terraform 
+- helm
+- AWS-cli
+- ansible
+- git
+- k9s
+
+
+
+
+# Tested Version: 
+- Fedora 36

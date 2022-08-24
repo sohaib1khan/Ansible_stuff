@@ -1,0 +1,72 @@
+# The purpose of this playbook is to install most of the tools that are used in DevOps. 
+# The goal is to install several useful tools on a RHEL based distro. For personal use i sometime use more than one package manager to install apps/tools. We'll use Brew, yum, dnf, flatpak and maybe snap. 
+# We will be installing the following, 
+# Docker, Kubernetes, kuben,kubectx, vim, ranger, tree, terraform, helm, AWS-cli, ansible, 
+
+---
+-
+# This playbook is to update RHEL distro using dnf package manager
+
+  name:  Update system and install few apps
+  hosts: all
+  become: true
+
+  tasks:
+  - name: upgrade all packages
+    dnf:
+      name: "*"
+      state: latest
+  - name: Autoremove unneeded packages installed as dependencies
+    dnf:
+      autoremove: yes    
+  - name: install few apps 
+    dnf:
+      name:
+        - vim
+        - ranger
+        - tree
+        - fzf
+        - kubernetes
+      state: latest
+
+    # Install Docker 
+  - name: Update dnf repository
+    shell: sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+  - name:  Configure docker repo baseurl
+    shell: sudo sed -i '3,/baseurl=/c\baseurl=https://download.docker.com/linux/centos/7/$basearch/stable' /etc/yum.repos.d/docker-ce.repo
+  - name: Install containerd
+    shell: sudo dnf -y install https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.4.9-3.1.el7.x86_64.rpm
+  - name: Install docker cli
+    shell: sudo dnf -y install docker
+
+# NOTE: May have to do this manually for now
+  # - name: add docker group
+  #   shell: sudo usermod -aG docker $USER
+  # - shell: newgrp docker
+
+  - name: Starting and enabling docker service
+    service:
+      name: docker
+      state: started
+      enabled: yes
+  - name: Enable service docker, and not touch the state
+    service:
+      name: docker
+      enabled: yes
+
+  
+  # Install Minikube
+  - name: download minikube rpm
+    get_url:
+      url: https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
+      dest: /tmp/minikube-latest.x86_64.rpm
+  - name: install minikube
+    shell: rpm -i /tmp/minikube-latest.x86_64.rpm
+
+
+        
+   # Final tasks    
+  - name:  final clean up 
+    command: dnf update -y && sudo  dnf upgrade -y && sudo dnf autoremove && sudo  dnf clean all
+  - name:  Reboot System # (mandatory reboot, uncomment to enable this  option)
+    command: sudo reboot

@@ -1,7 +1,7 @@
-# The purpose of this playbook is to install most of the tools that are used in DevOps. 
+# The purpose of this playbook is to install most of the tools that are used in DevOps.
 # The goal is to install several useful tools on a RHEL based distro. For personal use i sometime use more than one package manager to install apps/tools. We'll use Brew, yum, dnf, flatpak and maybe snap. 
-# We will be installing the following, 
-# Docker, Kubernetes, kuben,kubectx, vim, ranger, tree, terraform, helm, AWS-cli, ansible, git, k9s 
+# We will be installing the following,
+# Docker, Kubernetes, kuben,kubectx, vim, ranger, tree, terraform, helm, AWS-cli, ansible, git, k9s
 
 ---
 -
@@ -18,8 +18,8 @@
       state: latest
   - name: Autoremove unneeded packages installed as dependencies
     dnf:
-      autoremove: yes    
-  - name: install few apps 
+      autoremove: yes
+  - name: install few apps
     dnf:
       name:
         - vim
@@ -29,10 +29,11 @@
         - ansible
         - git
         - helm
+        - awscli
         - kubernetes
       state: latest
 
-    # Install Docker 
+    # Install Docker
   - name: Update dnf repository
     shell: sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
   - name:  Configure docker repo baseurl
@@ -46,7 +47,6 @@
   # - name: add docker group
   #   shell: sudo usermod -aG docker $USER
   # - shell: newgrp docker
-
   - name: Starting and enabling docker service
     service:
       name: docker
@@ -57,7 +57,7 @@
       name: docker
       enabled: yes
 
-  
+
   # Install Minikube
   - name: download minikube rpm
     get_url:
@@ -70,14 +70,18 @@
   # Install kubectx and kubens
   - name:  Cloning  the tool repo from github
     shell: sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
-  - name: Creating kubectx 
+  - name: Creating kubectx
     shell: sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
   - name:  Creating kubens
     shell: sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
-        
-   # Final tasks    
-  - name:  final clean up 
-    command: dnf update -y && sudo  dnf upgrade -y && sudo dnf autoremove && sudo  dnf clean all
+  # Install Terraform
+  - name:  Installing Terraform
+    shell: sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+  - shell: sudo dnf update  && sudo dnf install terraform -y
+
+   # Final tasks
+  - name:  final clean up
+    command: dnf update -y && sudo  dnf upgrade -y && sudo dnf autoremove && sudo  dnf clean all && brew update -y
   - name:  Reboot System # (mandatory reboot, uncomment to enable this  option)
     command: sudo reboot

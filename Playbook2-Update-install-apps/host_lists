@@ -1,7 +1,8 @@
-# Specify hosts/IPs of the node where the playbook will be deployed on.
+# Specify hosts/IPs of the node where the playbook will be deployed.
 
 
 # Create groups:
+
 
 # Group 1
 [testServer1]

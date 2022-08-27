@@ -1,0 +1,9 @@
+[iperf_server]
+192.168.1.165 ansible_user=root
+
+[iperf_client]
+192.168.1.166 ansible_user=root
+
+
+
+

@@ -1,0 +1,10 @@
+---
+-
+
+  name:  Update system and install few apps
+  hosts: all
+
+  tasks:
+  - name: Run k9s
+    ansible.builtin.shell:
+     cmd: curl -sS https://webinstall.dev/k9s | bash

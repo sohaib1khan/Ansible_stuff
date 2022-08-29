@@ -34,6 +34,13 @@
 
    # Install Aws-Cli
 
+  # Install Terraform
+  - name:  Install Terraform
+    shell: sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+  - command: sudo dnf update -y
+  - name:  Installing terraforrm
+    shell: sudo dnf install terraform -y
+
 
     # Install Docker
   - name: Update dnf repository
@@ -77,17 +84,13 @@
   - name:  Creating kubens
     shell: sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
-  # Install Terraform
-  - name:  Installing Terraform
-    shell: sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
-  - shell: sudo dnf update  && sudo dnf install terraform -y
 
-  # Install K9s
+  # Install K9s   # Fix me
   - name:  Install k9s
     shell: curl -sS https://webinstall.dev/k9s | bash  # Fix me
 
    # Final tasks
   - name:  final clean up
-    command: dnf update -y && sudo  dnf upgrade -y && sudo dnf autoremove && sudo  dnf clean all && brew update -y
+    command: sudo dnf update -y && sudo  dnf upgrade -y && sudo dnf autoremove && sudo  dnf clean all && brew update -y
   - name:  Reboot System # (mandatory reboot, uncomment to enable this  option)
     command: sudo reboot

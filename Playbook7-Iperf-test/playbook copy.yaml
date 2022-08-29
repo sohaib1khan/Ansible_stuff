@@ -3,10 +3,9 @@
 # This playbook is to install and run Iperf
 
   name:  Update system and install few apps
-  hosts: iperf_server:iperf_client
+  hosts: all
   become: false
-  strategy: free
-
+  
   tasks:
     - name: Upgrade all packages to the latest version
       apt:
@@ -22,12 +21,12 @@
         pkg:
          - iperf3
 
-    - include: iperf3-server.yaml
-      when:  "'iperf_server' in group_names"
+    - name:  Start Iperf Server on port 5000
+      hosts: iperf_server
+    - shell: iperf3 -s -p 5000 >> /root/iperf3.log
 
-    - include: iperf3-client.yaml
-      when: "'iperf_client' in group_names"
+    - name:  Start Client on port 5000
+      hosts: iperf_client
 
-    - hosts: app
-      tasks:
-
+    - name:  Start Client
+      shell: iperf3 -c 192.168.1.165 -p 5000 -t 20  >> /root/iperf3.log

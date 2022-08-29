@@ -1,0 +1,22 @@
+---
+-
+
+  name:  Install terraform
+  hosts: all
+  become: true
+
+  tasks:
+  - name: upgrade all packages
+    dnf:
+      name: "*"
+      state: latest
+  - name: Autoremove unneeded packages installed as dependencies
+    dnf:
+      autoremove: yes
+
+  # Install Terraform
+  - name:  Install Terraform
+    shell: sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+  - command: sudo dnf update -y
+  - name:  Installing terraforrm
+    shell: sudo dnf install terraform -y

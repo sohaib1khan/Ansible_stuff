@@ -29,6 +29,7 @@
         - ansible
         - git
         - helm
+        - git-crypt
         - kubernetes
       state: latest
 
@@ -40,6 +41,12 @@
   - command: sudo dnf update -y
   - name:  Installing terraforrm
     shell: sudo dnf install terraform -y
+
+
+  # Install tf.env  # Fix this block
+  # - name: Install tfenv
+  #   shell: git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
+  # - shell: ln -s ~/.tfenv/bin/* ~/.local/bin
 
 
     # Install Docker

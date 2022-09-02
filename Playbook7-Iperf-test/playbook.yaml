@@ -15,19 +15,9 @@
 
     - name: Update all packages to the latest version
       apt:
-        upgrade: dist 
+        upgrade: dist
 
     - name: Install a list of packages
       apt:
         pkg:
          - iperf3
-
-    - include: iperf3-server.yaml
-      when:  "'iperf_server' in group_names"
-
-    - include: iperf3-client.yaml
-      when: "'iperf_client' in group_names"
-
-    - hosts: app
-      tasks:
-

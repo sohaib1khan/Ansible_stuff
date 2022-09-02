@@ -1,3 +1,0 @@
-    - name:  Start Iperf Server on port 5000
-      hosts: iperf_server
-    - shell: iperf3 -s -p 5000 >> /root/iperf3.log

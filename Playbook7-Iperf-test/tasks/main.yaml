@@ -1,0 +1,10 @@
+---
+-
+  hosts: all
+
+  tasks:
+
+      - name:  Run iperf3 on server
+        shell: iperf3 --server --one-off --daemon >> /root/iperf3.log
+      - name:  Run iperf3 on client
+        command: iperf3 -c 192.168.1.171 -p 5000 -t 20  >> /root/iperf3.log

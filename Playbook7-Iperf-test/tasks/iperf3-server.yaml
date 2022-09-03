@@ -1,9 +1,0 @@
----
--
-
-  hosts: iperf_server
-
-  tasks:
-
-    - name:  Start Iperf Server on port 5000
-      shell: iperf3 --server --one-off --daemon  >> /root/iperf3.log

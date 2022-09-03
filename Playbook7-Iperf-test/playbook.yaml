@@ -1,23 +1,34 @@
 ---
 -
-# This playbook is to install and run Iperf
 
-  name:  Update system and install few apps
-  hosts: iperf_server:iperf_client
-  become: false
-  strategy: free
-
+  hosts: iperf_server
   tasks:
-    - name: Upgrade all packages to the latest version
-      apt:
-        name: "*"
-        state: latest
+    - name: start server iperf 5000
+      shell: iperf3 --server --one-off --daemon -p 5000
+    - name: start server iperf 5002
+      shell: iperf3 --server --one-off --daemon -p 5002
 
-    - name: Update all packages to the latest version
-      apt:
-        upgrade: dist
 
-    - name: Install a list of packages
-      apt:
-        pkg:
-         - iperf3
+
+# - hosts: iperf_client
+#   tasks:
+
+#     - name: start server iperf 5008
+#       shell: iperf3 --server --one-off --daemon -p 5008
+#     - name:  start iperf client
+#       shell: date >> /root/iperf3.log
+#     - shell: iperf3 -c 192.168.1.173 -p 5000 -t 100  >> /root/iperf3.log
+
+- hosts: iperf_client2
+  tasks:
+    - name: start server iperf 5010
+      shell: iperf3 --server --one-off --daemon -p 5010
+    - name:  start iperf client
+      shell: date >> /root/iperf3.log
+    - shell: iperf3 -c 192.168.1.173 -p 5002 -t 100 --logfile /root/iperf.txt   # >> /root/iperf3.log
+    # This block is to for verbose purpose
+      register: resultss
+    - name: display resultsss
+      debug:
+         msg: "The resultss is {{ resultss }}"
+

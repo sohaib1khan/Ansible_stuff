@@ -1,5 +1,6 @@
 # Ansible README
 
+## How To run iperf3 with ansible playbook
 
 This playbook uses iperf3 to run perform active measurements to determine the maximum achievable bandwidth on IP networks. For your use case edit the appropriate files (host_list, playbook.yaml) and run the playbooks. 
 

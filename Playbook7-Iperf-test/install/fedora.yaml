@@ -1,0 +1,19 @@
+---
+-
+
+  name:  Update system and install few apps
+  hosts: all
+  become: true
+
+  tasks:
+  - name: upgrade all packages
+    dnf:
+      name: "*"
+      state: latest
+  - name: Autoremove unneeded packages installed as dependencies
+    dnf:
+      autoremove: yes
+  - name: install few apps
+    dnf:
+      name:
+      - iperf3

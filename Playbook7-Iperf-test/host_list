@@ -1,5 +1,8 @@
 [iperf_server]
 192.168.1.173 ansible_user=root
 
-[iperf_client]
+[iperf_client1]
 192.168.1.171 ansible_user=root
+
+[iperf_client2]
+192.168.1.172 ansible_user=root

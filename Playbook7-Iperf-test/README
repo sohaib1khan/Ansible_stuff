@@ -1,3 +1,10 @@
-# Ansible_To_Go
+# Ansible README
 
-In this play 
+
+This playbook uses iperf3 to run perform active measurements to determine the maximum achievable bandwidth on IP networks. For your use case edit the appropriate files (host_list, playbook.yaml) and run the playbooks. 
+
+
+The playbook tasks start  with  specified number of servers with unique port assigned. With iperf, its a 1:1 relationship with the server and client. If you are testing 5 client devies, then you will need to setup 5 servers
+
+
+Then each client is split into its own task. So client 1 will connection with

@@ -1,0 +1,2 @@
+[ubuntuservers]
+192.168.1.174 ansible_user=media1stack

@@ -1,0 +1,44 @@
+---
+-
+  name: Update & installs updates
+  hosts: all
+
+  tasks:
+    - name: Upgrade all packages to the latest version
+      apt:
+        name: "*"
+        state: latest
+
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist
+
+      # Install Docker
+    - name: Installing docker
+      shell: curl -fsSL https://get.docker.com -o get-docker.sh
+    - shell: sudo sh get-docker.sh
+    - name: Starting and enabling docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+    - name: Enable service docker, and not touch the state
+      service:
+        name: docker
+        enabled: yes
+
+
+
+    - name: Install a list of packages
+      apt:
+        pkg:
+        - ranger
+        - net-tools
+        - vim
+        - docker-compose-plugin
+      # Final tasks
+    - name:  final clean up
+      shell: sudo  apt update -y && sudo  apt upgrade -y && sudo  apt autoclean -y && sudo apt autoremove -y
+    - name:  Reboot System # (mandatory reboot, uncomment to enable this  option)
+      command: sudo reboot
+

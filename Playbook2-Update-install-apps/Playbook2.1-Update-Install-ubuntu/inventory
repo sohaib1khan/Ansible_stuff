@@ -1,7 +1,0 @@
-# Specify host/ip of the node where the playbook will be deployed on
-
-# Create groups: 
-
-# Group 1 
-[ansibleserver7]
-192.168.1.142 ansible_user=root 

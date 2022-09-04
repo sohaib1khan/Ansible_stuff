@@ -26,6 +26,10 @@
       service:
         name: docker
         enabled: yes
+# NOTE: May have to do this manually for now
+  # - name: add docker group
+  #   shell: sudo usermod -aG docker $USER
+  # - shell: newgrp docker
 
 
 

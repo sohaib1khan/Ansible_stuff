@@ -31,8 +31,6 @@
   #   shell: sudo usermod -aG docker $USER
   # - shell: newgrp docker
 
-
-
     - name: Install a list of packages
       apt:
         pkg:

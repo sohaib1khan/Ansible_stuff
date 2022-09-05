@@ -1,0 +1,128 @@
+---
+-
+  name: Update packages
+  hosts: all
+
+  tasks:
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist
+    - name: Upgrade all packages to the latest version
+      apt:
+        name: "*"
+        state: latest
+
+    # Install kubernetes
+    - name: Install kubernetes
+      shell: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - shell: curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+    - shell: echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+    - shell: sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+    # Install Helm
+    - name: Installing Helm
+      shell: wget https://get.helm.sh/helm-v3.8.2-linux-amd64.tar.gz
+    - shell: tar xvf helm-*-linux-amd64.tar.gz
+    - shell: sudo mv linux-amd64/helm /usr/local/bin
+
+    # Install terraform
+    - name: Installing Terraform
+      shell: wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    - shell: echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+    - command: sudo apt update
+    - shell: sudo apt install terraform -y
+    - name: Enabling tab autocompletetion
+      shell: touch ~/.bashrc
+    - shell: terraform -install-autocomplete
+
+    # Install Minikube
+    - name: Installing Minikube
+      shell: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \ && chmod +x minikube
+    - shell: sudo mkdir -p /usr/local/bin/
+    - shell: sudo install minikube /usr/local/bin/
+
+    # AWS-cli install
+    - name: Installing AWS-Cli
+      shell: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    - shell: unzip awscliv2.zip
+    - shell: sudo ./aws/install
+
+
+    - name:  Installing Brave
+      shell: sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg 
+    - shell: echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    - shell: sudo apt update && sudo apt install brave-browser -y
+
+    - name:  Installing Zoom
+      shell: wget https://zoom.us/client/latest/zoom_amd64.deb  && sudo apt install ./zoom_amd64.deb -y
+
+    - name:  Installing discord
+      shell: wget "https://discord.com/api/download?platform=linux&format=deb" -O discord.deb
+    - shell: sudo apt install ./discord.deb -y
+
+    # Install kubectx and kubens
+    - name:  Cloning  the tool repo from github
+      shell: git clone https://github.com/ahmetb/kubectx /opt/kubectx
+    - name: Creating kubectx
+      shell: sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+    - name:  Creating kubens
+      shell: sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+
+    # Install K9s   # Fix me
+    - name:  Install k9s
+      shell: curl -sS https://webinstall.dev/k9s | bash  # Fix me
+
+
+    # Flatpak App install
+    - name: Installing the slack flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.slack.Slack.flatpakref
+        state: present
+    - name:  Installing vscode
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.visualstudio.code.flatpakref
+        state: present
+    - name: Installing the chrome browser flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/com.google.Chrome.flatpakref
+        state: present
+
+    - name: Install a list of packages
+      apt:
+        pkg:
+        - net-tools
+        - docker.io
+        - vim
+        - tree
+        - terminator
+        - vlc
+        - pithos
+        - ranger
+        - fzf
+        - git
+        - git-crypt
+        - ansible
+        state: latest
+
+    # NOTE: May have to do this manually for now
+    # - name: add docker group
+    #   shell: sudo usermod -aG docker $USER
+    # - shell: newgrp docker
+    - name: Starting and enabling docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+    - name: Enable service docker, and not touch the state
+      service:
+        name: docker
+        enabled: yes
+
+
+
+
+    # Final tasks
+    - name:  final clean up
+      shell: sudo  apt update && sudo  apt upgrade -y && sudo  apt autoclean -y && sudo apt autoremove -y
+    - name:  Reboot System (mandatory reboot, uncomment to enable this  option)
+      command: sudo reboot

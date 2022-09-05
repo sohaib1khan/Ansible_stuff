@@ -1,0 +1,26 @@
+# Ansible README
+
+This playbook  will install few tools and desktop apps/
+
+
+# Apps/tools
+- Docker
+- Kubernetes
+- kuben
+- kubectx
+- terraform 
+- helm
+- AWS-cli
+- ansible
+- git
+- k9s
+
+
+
+
+# Tested Version: 
+- PopOS 22.04
+
+
+# Command: 
+ ansible-playbook playbook.yaml -i host_list -

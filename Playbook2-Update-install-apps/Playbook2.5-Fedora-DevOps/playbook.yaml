@@ -92,9 +92,9 @@
     shell: sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 
-  # Install K9s   # Fix me
-  - name:  Install k9s
-    shell: curl -sS https://webinstall.dev/k9s | bash  # Fix me
+  #  Install k9s
+  - name: install k9s
+    ansible.builtin.include_tasks: k9s_install.yaml
 
    # Final tasks
   - name:  final clean up

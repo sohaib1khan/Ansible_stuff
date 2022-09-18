@@ -12,20 +12,20 @@
         name: "*"
         state: latest
 
-    # Install kubernetes
+    # # Install kubernetes
     - name: Install kubernetes
       shell: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     - shell: curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
     - shell: echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
     - shell: sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-    # Install Helm
+    # # Install Helm
     - name: Installing Helm
       shell: wget https://get.helm.sh/helm-v3.8.2-linux-amd64.tar.gz
     - shell: tar xvf helm-*-linux-amd64.tar.gz
     - shell: sudo mv linux-amd64/helm /usr/local/bin
 
-    # Install terraform
+    # # Install terraform
     - name: Installing Terraform
       shell: wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
     - shell: echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
@@ -35,13 +35,13 @@
       shell: touch ~/.bashrc
     - shell: terraform -install-autocomplete
 
-    # Install Minikube
+    # # Install Minikube
     - name: Installing Minikube
       shell: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \ && chmod +x minikube
     - shell: sudo mkdir -p /usr/local/bin/
     - shell: sudo install minikube /usr/local/bin/
 
-    # AWS-cli install
+    # # AWS-cli install
     - name: Installing AWS-Cli
       shell: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     - shell: unzip awscliv2.zip
@@ -68,10 +68,9 @@
     - name:  Creating kubens
       shell: sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
-    # Install K9s   # Fix me
-    - name:  Install k9s
-      shell: curl -sS https://webinstall.dev/k9s | bash  # Fix me
-
+    #  Install k9s
+    - name: install k9s
+      ansible.builtin.include_tasks: k9s_install.yaml
 
     # Flatpak App install
     - name: Installing the slack flatpak
@@ -104,10 +103,11 @@
         - ansible
         state: latest
 
-    # NOTE: May have to do this manually for now
+    # NOTE: May have to do this manually
     # - name: add docker group
     #   shell: sudo usermod -aG docker $USER
     # - shell: newgrp docker
+
     - name: Starting and enabling docker service
       service:
         name: docker

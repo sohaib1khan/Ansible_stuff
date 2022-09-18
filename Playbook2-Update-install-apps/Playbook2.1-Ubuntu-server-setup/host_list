@@ -1,0 +1,7 @@
+[workerk8s]
+192.168.1.180 ansible_user=worker1
+192.168.1.181 ansible_user=worker2
+192.168.1.182 ansible_user=worker3
+
+[masterk8s]
+192.168.1.179 ansible_user=master_node

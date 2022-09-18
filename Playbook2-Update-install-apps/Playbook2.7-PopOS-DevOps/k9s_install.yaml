@@ -1,0 +1,5 @@
+---
+-
+    become: false
+    name: install k9s
+    shell: curl -sS https://webinstall.dev/k9s | bash

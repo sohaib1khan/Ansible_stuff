@@ -1,7 +1,7 @@
 ---
 -
   name: Update & installs updates
-  hosts: all
+  hosts: masterk8s
 
   tasks:
     - name: Upgrade all packages to the latest version

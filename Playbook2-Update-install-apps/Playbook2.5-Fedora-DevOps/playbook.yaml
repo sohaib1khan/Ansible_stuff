@@ -45,8 +45,7 @@
 
   # Install tf.env  # Fix this block
   # - name: Install tfenv
-  #   shell: git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
-  # - shell: ln -s ~/.tfenv/bin/* ~/.local/bin
+  #   shell: sudo rpm -ivh https://github.com/shihanng/tfvar/releases/latest/download/tfvar_linux_amd64.rpm
 
 
     # Install Docker
@@ -75,13 +74,13 @@
 
 
   # Install Minikube
-  - name: download minikube rpm
-    get_url:
-      url: https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
-      dest: /tmp/minikube-latest.x86_64.rpm
-  - name: install minikube
-    shell: sudo rpm -i /tmp/minikube-latest.x86_64.rpm
-  - shell: sudo rm -rf /tmp/*
+  # - name: download minikube rpm
+  #   get_url:
+  #     url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  #     dest: /tmp/minikube-latest.x86_64.rpm
+  # - name: install minikube
+  #   shell: sudo rpm -i /tmp/minikube-latest.x86_64.rpm
+  # - shell: sudo rm -rf /tmp/*
 
   # Install kubectx and kubens
   - name:  Cloning  the tool repo from github
@@ -94,7 +93,7 @@
 
   #  Install k9s
   - name: install k9s
-    ansible.builtin.include_tasks: k9s_install.yaml
+    ansible.builtin.include_tasks: ./tasks/k9s_install.yaml
 
    # Final tasks
   - name:  final clean up

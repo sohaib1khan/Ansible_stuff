@@ -10,7 +10,6 @@ krew_install(){
   tar zxvf "${KREW}.tar.gz" &&
   ./"${KREW}" install krew
 )
-
 }
 
 krew_install > /dev/null 2>&1
@@ -19,7 +18,6 @@ if [ $? -eq 0 ]
 
     then
 	    export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
     else
 	    echo "Could not install krew"
 fi

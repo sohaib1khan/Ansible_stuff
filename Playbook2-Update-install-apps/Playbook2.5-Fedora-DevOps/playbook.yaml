@@ -90,6 +90,10 @@
   - name:  Creating kubens
     shell: sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
+  # Install Krew kubctl package manager
+  - name: Installing Krew
+    shell: wget https://raw.githubusercontent.com/sohaib1khan/Docker_Kubernetes/main/Plugins/krew/krew_install.sh && bash krew_install.sh
+
 
   #  Install k9s
   - name: install k9s

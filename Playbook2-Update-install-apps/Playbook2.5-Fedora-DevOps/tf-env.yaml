@@ -1,9 +1,0 @@
----
--
-
-  name:  Update system and install few apps
-  hosts: all
-
-  tasks:
-  - name: Install tfenv 
-    shell: 

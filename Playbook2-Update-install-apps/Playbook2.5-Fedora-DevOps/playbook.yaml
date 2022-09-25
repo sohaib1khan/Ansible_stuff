@@ -92,7 +92,7 @@
 
   # Install Krew kubctl package manager
   - name: Installing Krew
-    shell: wget https://raw.githubusercontent.com/sohaib1khan/Docker_Kubernetes/main/Plugins/krew/krew_install.sh && bash krew_install.sh
+    shell: wget https://raw.githubusercontent.com/sohaib1khan/Ansible_To_Go/master/Playbook2-Update-install-apps/Playbook2.5-Fedora-DevOps/tasks/krew_install.sh
 
 
   #  Install k9s

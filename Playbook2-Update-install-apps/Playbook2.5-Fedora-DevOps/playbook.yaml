@@ -42,12 +42,6 @@
   - name:  Installing terraforrm
     shell: sudo dnf install terraform -y
 
-
-  # Install tf.env  # Fix this block
-  # - name: Install tfenv
-  #   shell: sudo rpm -ivh https://github.com/shihanng/tfvar/releases/latest/download/tfvar_linux_amd64.rpm
-
-
     # Install Docker
   - name: Update dnf repository
     shell: sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
@@ -92,7 +86,7 @@
 
   # Install Krew kubctl package manager
   - name: Installing Krew
-    shell: wget https://raw.githubusercontent.com/sohaib1khan/Ansible_To_Go/master/Playbook2-Update-install-apps/Playbook2.5-Fedora-DevOps/tasks/krew_install.sh
+    ansible.builtin.include_tasks: ./tasks/krew_install.yaml
 
 
   #  Install k9s

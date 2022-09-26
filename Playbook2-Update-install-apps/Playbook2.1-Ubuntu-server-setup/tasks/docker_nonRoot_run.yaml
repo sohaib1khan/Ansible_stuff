@@ -1,0 +1,6 @@
+---
+-
+
+  become_method: sudo
+  name: adding user/group
+  shell: sudo usermod -aG docker $USER && newgrp docker

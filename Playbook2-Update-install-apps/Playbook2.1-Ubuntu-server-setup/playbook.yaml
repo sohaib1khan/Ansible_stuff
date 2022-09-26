@@ -1,17 +1,19 @@
 ---
 -
   name: Update & installs updates
-  hosts: masterk8s
+  hosts: all
 
   tasks:
-    - name: Upgrade all packages to the latest version
-      apt:
-        name: "*"
-        state: latest
+    # - name: dpkg configure
+    #   shell: sudo dpkg --configure -a
+    # - name: Upgrade all packages to the latest version
+    #   apt:
+    #     name: "*"
+    #     state: latest
 
-    - name: Update all packages to the latest version
-      apt:
-        upgrade: dist
+    # - name: Update all packages to the latest version
+    #   apt:
+    #     upgrade: dist
 
       # Install Docker
     - name: Installing docker
@@ -22,16 +24,18 @@
         name: docker
         state: started
         enabled: yes
-    - name: Enable service docker, and not touch the state
+    - name: Enable service docker
       service:
         name: docker
         enabled: yes
-# NOTE: May have to do this manually for now
-  # - name: add docker group
-  #   shell: sudo usermod -aG docker $USER
-  # - shell: newgrp docker
+# # NOTE: May have to do this manually for now
+#   # - name: add docker group
+#   #   shell: sudo usermod -aG docker $USER
+#   # - shell: newgrp docker
+    # - name: enabling group and users
+    #   ansible.builtin.include_tasks: ./tasks/docker_nonRoot_run.yaml
 
-    - name: Install a list of packages
+    - name: Installing list of packages
       apt:
         pkg:
         - ranger

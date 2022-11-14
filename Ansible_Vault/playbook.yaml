@@ -1,0 +1,103 @@
+# The purpose of this playbook is to install most of the tools that are used in DevOps.
+# The goal is to install several useful tools on a RHEL based distro. For personal use i sometime use more than one package manager to install apps/tools. We'll use Brew, yum, dnf, flatpak and maybe snap. 
+# We will be installing the following,
+# Docker, Kubernetes, kuben,kubectx, vim, ranger, tree, terraform, helm, AWS-cli, ansible, git, k9s
+
+---
+-
+# This playbook is to update RHEL distro using dnf package manager
+
+  name:  Update system and install few apps
+  hosts: all
+  become: true
+
+  tasks:
+  - name: upgrade all packages
+    dnf:
+      name: "*"
+      state: latest
+  - name: Autoremove unneeded packages installed as dependencies
+    dnf:
+      autoremove: yes
+  - name: install few apps
+    dnf:
+      name:
+        - vim
+        - ranger
+        - tree
+        - ansible
+        - git
+        - git-crypt
+      state: latest
+
+   # Install Aws-Cli
+
+  # Install Terraform
+  # - name:  Install Terraform
+  #   shell: sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+  # - command: sudo dnf update -y
+  # - name:  Installing terraforrm
+  #   shell: sudo dnf install terraform -y
+
+    # Install Docker
+  # - name: Update dnf repository
+  #   shell: sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+  # - name:  Configure docker repo baseurl
+  #   shell: sudo sed -i '3,/baseurl=/c\baseurl=https://download.docker.com/linux/centos/7/$basearch/stable' /etc/yum.repos.d/docker-ce.repo
+  # - name: Install containerd
+  #   shell: sudo dnf -y install https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.4.9-3.1.el7.x86_64.rpm
+  # - name: Install docker cli
+  #   shell: sudo dnf -y install docker
+
+# NOTE: May have to do this manually for now
+  # - name: add docker group
+  #   shell: sudo usermod -aG docker $USER
+  # - shell: newgrp docker
+  # - name: Starting and enabling docker service
+  #   service:
+  #     name: docker
+  #     state: started
+  #     enabled: yes
+  # - name: Enable service docker, and not touch the state
+  #   service:
+  #     name: docker
+  #     enabled: yes
+
+
+  # Install Minikube
+  # - name: download minikube rpm
+  #   get_url:
+  #     url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  #     dest: /tmp/minikube-latest.x86_64.rpm
+  # - name: install minikube
+  #   shell: sudo rpm -i /tmp/minikube-latest.x86_64.rpm
+  # - shell: sudo rm -rf /tmp/*
+  # - name: downloading minikube
+  #   shell: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
+  # - shell: sudo mkdir -p /usr/local/bin/
+  # - shell: sudo install minikube /usr/local/bin/
+
+
+
+  # Install kubectx and kubens
+  # - name:  Cloning  the tool repo from github
+  #   shell: sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+  # - name: Creating kubectx
+  #   shell: sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+  # - name:  Creating kubens
+  #   shell: sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+
+  # # Install Krew kubctl package manager
+  # # - name: Installing Krew
+  # #   ansible.builtin.include_tasks: ./tasks/krew_install.yaml
+
+
+  #  Install k9s
+  # - name: install k9s
+  #   ansible.builtin.include_tasks: ./tasks/k9s_install.yaml
+
+   # Final tasks
+  - name:  final clean up
+    command: sudo dnf update -y && sudo  dnf upgrade -y && sudo dnf autoremove && sudo  dnf clean all && brew update -y
+  - name:  Reboot System # (mandatory reboot, uncomment to enable this  option)
+    command: sudo reboot

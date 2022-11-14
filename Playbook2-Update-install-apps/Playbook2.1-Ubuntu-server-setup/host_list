@@ -1,7 +1,4 @@
-[workerk8s]
-192.168.1.184 ansible_user=k8s-worker1
-192.168.1.185 ansible_user=k8s-worker2
-192.168.1.186 ansible_user=k8s-worker3
+[nodes]
+192.168.1.199 ansible_user=mediaserver
 
-[masterk8s]
-192.168.1.183 ansible_user=k8s-master0
+

@@ -75,6 +75,12 @@
   # - name: install minikube
   #   shell: sudo rpm -i /tmp/minikube-latest.x86_64.rpm
   # - shell: sudo rm -rf /tmp/*
+  - name: downloading minikube
+    shell: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
+  - shell: sudo mkdir -p /usr/local/bin/
+  - shell: sudo install minikube /usr/local/bin/
+
+
 
   # Install kubectx and kubens
   - name:  Cloning  the tool repo from github

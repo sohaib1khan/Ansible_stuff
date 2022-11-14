@@ -1,2 +1,2 @@
-[devops]
-192.168.1.220 ansible_user=infra_control
+[hosts]
+192.168.1.220 ansible_user=notroot

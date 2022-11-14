@@ -1,5 +1,0 @@
----
--
-    become: false
-    name: Installing krew
-    shell: wget https://raw.githubusercontent.com/sohaib1khan/Docker_Kubernetes/main/Plugins/k8s_krew_install/krew_install.sh && bash krew_install.sh

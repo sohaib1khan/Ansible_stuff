@@ -48,18 +48,6 @@
     - shell: sudo ./aws/install
 
 
-    - name:  Installing Brave
-      shell: sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg 
-    - shell: echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-    - shell: sudo apt update && sudo apt install brave-browser -y
-
-    - name:  Installing Zoom
-      shell: wget https://zoom.us/client/latest/zoom_amd64.deb  && sudo apt install ./zoom_amd64.deb -y
-
-    - name:  Installing discord
-      shell: wget "https://discord.com/api/download?platform=linux&format=deb" -O discord.deb
-    - shell: sudo apt install ./discord.deb -y
-
     # Install kubectx and kubens
     - name:  Cloning  the tool repo from github
       shell: git clone https://github.com/ahmetb/kubectx /opt/kubectx
@@ -72,20 +60,6 @@
     - name: install k9s
       ansible.builtin.include_tasks: ./tasks/k9s_install.yaml
 
-    # Flatpak App install
-    - name: Installing the slack flatpak
-      flatpak:
-        name:  https://dl.flathub.org/repo/appstream/com.slack.Slack.flatpakref
-        state: present
-    - name:  Installing vscode
-      flatpak:
-        name:  https://dl.flathub.org/repo/appstream/com.visualstudio.code.flatpakref
-        state: present
-    - name: Installing the chrome browser flatpak
-      flatpak:
-        name:  https://dl.flathub.org/repo/appstream/com.google.Chrome.flatpakref
-        state: present
-
     - name: Install a list of packages
       apt:
         pkg:
@@ -93,12 +67,9 @@
         - docker.io
         - vim
         - tree
-        - terminator
-        - vlc
-        - pithos
         - ranger
-        - fzf
         - git
+        - fzf
         - git-crypt
         - unzip
         - ansible
@@ -118,9 +89,6 @@
       service:
         name: docker
         enabled: yes
-
-
-
 
     # Final tasks
     - name:  final clean up

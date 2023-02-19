@@ -21,9 +21,10 @@
         - vim 
         - tree
         - terminator
+        - flameshot
         - vlc
         - pithos
-        - ranger  # cli file manager pretty cool actually https://github.com/ranger/ranger 
+      # - ranger  # cli file manager pretty cool actually https://github.com/ranger/ranger 
         - flatpak
     - command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     
@@ -32,6 +33,12 @@
       shell: sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg 
     - shell: echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
     - shell: sudo apt update && sudo apt install brave-browser -y
+
+#    - name: Install Opera Browser
+#      shell: sudo sh -c 'echo "deb http://deb.opera.com/opera/ stable non-free" >> /etc/apt/sources.list.d/opera.list'
+#      shell: sudo sh -c 'wget -O - http://deb.opera.com/archive.key | apt-key add -'
+#      shell: sudo apt-get update
+#      shell: sudo apt-get install opera
 
     - name:  Install Zoom
       shell: wget https://zoom.us/client/latest/zoom_amd64.deb  && sudo apt install ./zoom_amd64.deb -y
@@ -46,15 +53,31 @@
       flatpak:
         name:  https://dl.flathub.org/repo/appstream/com.slack.Slack.flatpakref
         state: present
-    - name:  Install vscode 
-      flatpak:
-        name:  https://dl.flathub.org/repo/appstream/com.visualstudio.code.flatpakref
-        state: present                   
-    - name: Install the chrome browser flatpak
+    # - name:  Install vscode with flatpak
+    #   flatpak:
+    #     name:  https://dl.flathub.org/repo/appstream/com.visualstudio.code.flatpakref
+    #     state: present
+    - name: Install the chrome browser with flatpak
       flatpak:
         name:  https://dl.flathub.org/repo/appstream/com.google.Chrome.flatpakref
         state: present
-    # Final tasks    
+#    - name: Install flameshot with flatpak
+#      flatpak:
+#        name:  https://dl.flathub.org/repo/appstream/org.flameshot.Flameshot.flatpakref
+#        state: present
+    - name: Install obsidian with flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/md.obsidian.Obsidian.flatpakref
+        state: present
+   #    - name: Install peek with flatpak
+   #    flatpak:
+   #     name:  https://dl.flathub.org/repo/appstream/com.uploadedlobster.peek.flatpakref
+   #     state: present
+    - name: Install qBittorrent with flatpak
+      flatpak:
+        name:  https://dl.flathub.org/repo/appstream/org.qbittorrent.qBittorrent.flatpakref
+        state: present
+    # Final tasks
     - name:  final clean up 
       shell: sudo  apt update -y && sudo  apt upgrade -y && sudo  apt autoclean -y && sudo apt autoremove -y  
     - name:  Reboot System (mandatory reboot, uncomment to enable this  option)

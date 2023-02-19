@@ -1,0 +1,77 @@
+---
+- name: Install packages, create folder and reboot if needed
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update system
+      zypper:
+        update_cache: yes
+        name: '*'
+        state: latest
+
+    - name: Install tree package
+      zypper:
+        name: tree
+        state: latest
+
+    - name: Install Docker and Docker Compose
+      zypper:
+        name:
+          - docker
+          - docker-compose
+          - docker-compose-switch
+        state: latest
+
+    - name: Enable Docker service
+      systemd:
+        name: docker
+        enabled: yes
+
+    - name: Add current user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        group: docker
+        append: yes
+
+    - name: Restart and enable Docker service
+      systemd:
+        name: docker
+        state: restarted
+        enabled: yes
+
+    - name: Install Lazydocker
+      shell: curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+
+    - name: Clean up system
+      zypper:
+        name: '*'
+        state: absent
+
+    - name: Clean up system
+      zypper:
+        name:
+          - patterns-openSUSE-minimal_base-conflicts
+          - patterns-openSUSE-minimal_base
+          - patterns-openSUSE-minimal_base-32bit
+          - patterns-openSUSE-minimal_base-32bit-conflicts
+          - apparmor-parser
+          - apparmor-abstractions
+        state: absent
+
+    - name: Create Downloads folder
+      file:
+        path: /home/containerserver/Downloads
+        state: directory
+        mode: '0755'
+        owner: containerserver
+        group: containerserver
+
+    - name: Check if system needs to be rebooted
+      command: test -f /var/run/reboot-required
+      register: reboot_required
+      changed_when: reboot_required.rc == 0
+
+    - name: Reboot system if needed
+      reboot:
+      when: reboot_required.changed

@@ -47,10 +47,10 @@
       flatpak:
         name:  https://dl.flathub.org/repo/appstream/com.slack.Slack.flatpakref
         state: present
-    - name:  Install vscode 
-      flatpak:
-        name:  https://dl.flathub.org/repo/appstream/com.visualstudio.code.flatpakref
-        state: present
+          #    - name:  Install vscode 
+          #      flatpak:
+          #        name:  https://dl.flathub.org/repo/appstream/com.visualstudio.code.flatpakref
+          #        state: present
     - name: Install the chrome browser flatpak
       flatpak:
         name:  https://dl.flathub.org/repo/appstream/com.google.Chrome.flatpakref

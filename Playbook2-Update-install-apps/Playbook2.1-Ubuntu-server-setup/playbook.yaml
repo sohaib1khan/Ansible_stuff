@@ -15,19 +15,19 @@
       apt:
         upgrade: dist
 
-      # Install Docker
-    - name: Installing docker
-      shell: curl -fsSL https://get.docker.com -o get-docker.sh
-    - shell: sudo sh get-docker.sh
-    - name: Starting and enabling docker service
-      service:
-        name: docker
-        state: started
-        enabled: yes
-    - name: Enable service docker
-      service:
-        name: docker
-        enabled: yes
+    #   # Install Docker
+    # - name: Installing docker
+    #   shell: curl -fsSL https://get.docker.com -o get-docker.sh
+    # - shell: sudo sh get-docker.sh
+    # - name: Starting and enabling docker service
+    #   service:
+    #     name: docker
+    #     state: started
+    #     enabled: yes
+    # - name: Enable service docker
+    #   service:
+    #     name: docker
+    #     enabled: yes
 # # NOTE: May have to do this manually for now
 #   # - name: add docker group
 #   #   shell: sudo usermod -aG docker $USER
